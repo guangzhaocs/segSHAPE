@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "segshape"
+version = "0.1.0"
+description = "Hierarchical-HMM segmentation + anchored alignment for nanopore SHAPE"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Guangzhao Cheng", email = "gz.cheng.cs@gmail.com" },
+]
+requires-python = ">=3.10"
+keywords = ["nanopore", "SHAPE", "RNA", "structure", "modification", "HMM"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "scipy>=1.10",
+    "numba>=0.58",
+    "pysam>=0.22",
+    "h5py>=3.9",
+    "ont-fast5-api>=4.1",
+    # Pinned to 0.3.23: later versions (0.3.36+) ship a reader.py that
+    # mishandles its own default `extension<minknow.vbz>` signal schema on
+    # modern pyarrow (signal_pa raises AttributeError). 0.3.23 writes
+    # `large_binary` schema and decodes its own files cleanly. Revisit
+    # when nanoporetech/pod5-file-format#XXX lands.
+    "pod5==0.3.23",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7", "seaborn>=0.12"]
+dev = [
+    "pytest>=7",
+    "pytest-cov",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "build",
+    "twine",
+]
+
+[project.urls]
+Homepage = "https://github.com/guangzhaocs/segSHAPE"
+Documentation = "https://github.com/guangzhaocs/segSHAPE/blob/main/docs/tutorial.md"
+Issues = "https://github.com/guangzhaocs/segSHAPE/issues"
+
+[project.scripts]
+segshape = "segshape.cli:main"
+
+# ---------------------------------------------------------------------------
+# setuptools configuration (src layout + bundled data)
+# ---------------------------------------------------------------------------
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["segshape*"]
+
+[tool.setuptools.package-data]
+"segshape.data" = [
+    "kmer_models/*.csv",
+    "kmer_models/*.txt",
+    "kmer_models/*.model",
+    "rnafold_params/*.par",
+]
+
+# ---------------------------------------------------------------------------
+# Dev tooling
+# ---------------------------------------------------------------------------
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
