@@ -114,14 +114,17 @@ segshape pod5index <pod5_dir> --force --verify-dups
 
 ## Step 2 — basecalling with the move table (Dorado)
 
-Basecall with inline minimap2 alignment to the reference. Three options are
-essential for the downstream steps:
+Basecall with inline minimap2 alignment to the reference. Two options are
+essential for the downstream steps; a third is optional:
 
-- `--emit-moves` — exports the move table (step 3 uses it to find the signal
-  interval covering only the aligned bases).
+- `--emit-moves` — exports the move table. Step 3 walks it together with the
+  minimap2 alignment to derive the signal interval covering only the aligned
+  bases (`mv_trans_start/end`) — this is the entry/exit anchor step 5 uses.
 - `--reference` — inline alignment so reads carry reference coordinates.
-- `--estimate-poly-a` — polyA length, used by step 5 as a transcript-start
-  seed.
+- `--estimate-poly-a` *(optional)* — records a polyA-tail estimate in the
+  per-read CSV for diagnostics only. The pipeline does **not** depend on it:
+  the transcript-start anchor is derived from the alignment + move table, so
+  reads whose polyA estimate is absent or fails still align normally.
 
 ```bash
 dorado basecaller <model> \
