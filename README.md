@@ -39,7 +39,6 @@ pip install segshape
 conda install -c bioconda viennarna
 
 # 4. Test the install
-segshape --version
 segshape --help
 ```
 

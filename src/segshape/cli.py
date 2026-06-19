@@ -1,7 +1,7 @@
 """Top-level entry point for the ``segshape`` console script.
 
 Sub-commands are registered by each subpackage's ``cli.py`` so the modules stay
-self-contained. Heavy imports (numba, pysam, h5py, ...) are deferred into each
+self-contained. Heavy imports (numba, pysam, ...) are deferred into each
 sub-command's ``run`` function so ``segshape --help`` stays instant.
 
 Usage::
