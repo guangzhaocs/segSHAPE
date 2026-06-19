@@ -1,6 +1,13 @@
-# segSHAPE
+# segSHAPE: RNA secondary structure prediction from nanopore direct RNA sequencing
 
-Find-peaks segmentation + anchored alignment for nanopore SHAPE.
+[![bioRxiv](https://img.shields.io/badge/bioRxiv-2026.06.15.732177-green)](https://www.biorxiv.org/content/10.64898/2026.06.15.732177)
+[![PyPI](https://img.shields.io/pypi/v/segshape)](https://pypi.org/project/segshape/)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/guangzhaocs/segSHAPE?include_prereleases)](https://github.com/guangzhaocs/segSHAPE/releases)
+
+End-to-end pipeline: raw nanopore direct-RNA signal → SHAPE reactivity → RNA
+secondary structure, supporting both **RNA002** and **RNA004** chemistries.
 
 segSHAPE turns raw Oxford Nanopore direct-RNA signal into a SHAPE-constrained
 RNA secondary structure: it segments the signal into subevents, aligns them to
@@ -20,10 +27,23 @@ Requires Python ≥ 3.10. The folding step (7) needs the ViennaRNA `RNAfold`
 binary on `PATH`.
 
 ```bash
+# 1. Create an isolated environment (Python ≥ 3.10)
+conda create -n segshape python=3.10
+conda activate segshape
+
+# 2. Install segSHAPE from PyPI
+pip install segshape
+
+# 3. Provide RNAfold for the folding step (7)
+conda install -c bioconda viennarna
+```
+
+To install from source instead (for development):
+
+```bash
 git clone https://github.com/guangzhaocs/segSHAPE.git
 cd segSHAPE
 pip install -e .
-conda install -c bioconda viennarna     # provides RNAfold for step 7
 ```
 
 The bundled ONT k-mer tables and RNAfold parameter file ship inside the
@@ -33,7 +53,9 @@ package — nothing extra to download. Basecalling (step 2) uses Dorado and the
 ## Tutorial
 
 End-to-end walkthrough — directory layout, per-step commands, and expected
-outputs — in [docs/tutorial.md](docs/tutorial.md).
+outputs — in [docs/tutorial.md](docs/tutorial.md). Diagnostic plotting
+(`segshape plot`), with a tiny ready-to-run example fixture, is in
+[docs/plot.md](docs/plot.md).
 
 ## Public modules (CLI surface)
 
@@ -48,7 +70,7 @@ outputs — in [docs/tutorial.md](docs/tutorial.md).
 | `mod-calling` | per-position modification / reactivity calling |
 | `fold` | SHAPE-constrained secondary structure prediction (ViennaRNA RNAfold) |
 | `evaluate` | per-read LL filter, per-position MCC / reactivity summary, structure scoring |
-| `plot` | diagnostic plots (alignment path, signal trajectory, dorado-mv, segment QC) |
+| `plot` | diagnostic plots (alignment path, dorado-mv, segment QC) |
 
 Run `segshape <cmd> --help` (and `segshape <cmd> <step> --help`) to see every
 parameter. Sub-command parsers register lazily, so `segshape --help` does not

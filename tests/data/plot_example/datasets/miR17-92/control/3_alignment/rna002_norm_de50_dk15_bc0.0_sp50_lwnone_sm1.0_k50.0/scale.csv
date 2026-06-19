@@ -1,0 +1,4 @@
+read_idx,read_id,qc_tag,k_seed,k_start,best_end,j_start,j_end,n_events,scale,shift,v_scale,scale_raw,shift_raw,v_scale_raw,n_iter,ll
+0,02fee2ea-c798-4d77-8bd7-f429d821f06e,PASS,268,248,2947,0,935,2963,1.0,-0.0264,1.0,1.0,-0.0264,1.0,3,506.29
+1,032a695e-179a-4038-9218-188fef8a22dd,PASS,293,301,3004,0,935,3045,1.0,-0.0357,1.0,1.0,-0.0357,1.0,3,-30.74
+2,03a1a850-a4ef-4f9f-912b-1f86fe56f692,PASS,23,52,2509,131,931,2559,1.0,0.1039,1.0,1.0,0.1039,1.0,3,-238.42

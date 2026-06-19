@@ -52,7 +52,6 @@ def test_top_cli_builds():
     ["evaluate", "summarize"],
     ["evaluate", "build-summary"],
     ["plot", "alignment-path"],
-    ["plot", "trajectory"],
     ["plot", "dorado-mv"],
     ["plot", "segment"],
 ])
@@ -200,6 +199,40 @@ def test_normalize_shape_28_short_arrays_pass_through():
     from segshape.reactivity.calling import normalize
     x = np.array([1.0, 2.0, np.nan, 3.0])
     y = normalize(x, "shape_28")
+    np.testing.assert_array_equal(y[~np.isnan(y)], x[~np.isnan(x)])
+
+
+def test_normalize_boxplot_nonnegative_and_scales():
+    """SHAPE-MaP/ShapeMapper2 box-plot normalization: divide by the mean of
+    the top 10 % of IQR-outlier-filtered survivors. Like shape_28 it only
+    scales (no subtraction), so non-negative input stays non-negative, and
+    it is rank-identical to the raw input (monotonic)."""
+    import numpy as np
+    from segshape.reactivity.calling import normalize
+    rng = np.random.default_rng(1)
+    x = rng.uniform(0, 1, 500)
+    x[[7, 250]] = np.nan
+    y = normalize(x, "boxplot")
+    assert np.isnan(y[7]) and np.isnan(y[250])
+    fin_x, fin_y = x[~np.isnan(x)], y[~np.isnan(y)]
+    assert (fin_y >= 0).all()                                  # non-negative
+    # monotonic (rank-identical) since it is just division by a positive scalar
+    assert np.corrcoef(fin_x, fin_y)[0, 1] > 0.9999
+    # the IQR-filtered top-10% reference maps to ≈ 1
+    q1, q3 = np.percentile(fin_x, 25), np.percentile(fin_x, 75)
+    thr = max(1.5 * (q3 - q1), np.percentile(fin_x, 90))
+    surv = np.sort(fin_x[fin_x <= thr])
+    ref = surv[-int(len(surv) * 0.1):].mean()
+    assert ref > 0
+    np.testing.assert_allclose(fin_y, fin_x / ref, rtol=1e-9)
+
+
+def test_normalize_boxplot_short_arrays_pass_through():
+    """< 50 finite values must pass through unchanged."""
+    import numpy as np
+    from segshape.reactivity.calling import normalize
+    x = np.array([1.0, 2.0, np.nan, 3.0])
+    y = normalize(x, "boxplot")
     np.testing.assert_array_equal(y[~np.isnan(y)], x[~np.isnan(x)])
 
 

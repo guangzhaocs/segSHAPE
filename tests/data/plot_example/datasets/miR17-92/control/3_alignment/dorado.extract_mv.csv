@@ -1,0 +1,6 @@
+# segshape_version=0.1.0 dorado_version=0.9.6+0949eb8d bam=/scratch/cs/infantbiome/chengg1/segSHAPE/datasets/miR17-92/control/2_base_called/dorado-0.9.6/dorado.sorted.bam
+# filter_flag=2324 min_mapq=20 min_ref_coverage=0.8 drop_split_reads=True drop_dup_reads=True keep_contigs=all
+read_id,flag,is_reverse,is_child,mapq,ref_name,ref_len,seq_len,align_start,align_end,ref_start,ref_end,called_start,called_end,mv_trans_start,mv_trans_end,ts,ns,stride,n_moves,polya_tail,polya_start,polya_end,polya_sec_start,polya_sec_end
+032a695e-179a-4038-9218-188fef8a22dd,0,0,0,60,miR17-92,951,940,0,926,7,951,7950,48838,12065,48835,7950,48838,5,940,140,-1,-1,-1,-1
+03a1a850-a4ef-4f9f-912b-1f86fe56f692,0,0,0,60,miR17-92,951,829,0,820,9,833,4650,39267,4945,39265,4650,39267,5,829,0,-1,-1,-1,-1
+02fee2ea-c798-4d77-8bd7-f429d821f06e,0,0,0,60,miR17-92,951,946,0,931,9,939,6250,46277,10030,46275,6250,46277,5,946,125,-1,-1,-1,-1

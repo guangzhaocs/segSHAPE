@@ -1,3 +1,3 @@
-"""segSHAPE: Hierarchical-HMM segmentation + anchored alignment for nanopore SHAPE."""
+"""segSHAPE: RNA secondary structure prediction from Nanopore direct RNA sequencing."""
 
 __version__ = "0.1.0"

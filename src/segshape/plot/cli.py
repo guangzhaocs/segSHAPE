@@ -2,8 +2,7 @@
 
 Sub-sub-commands::
 
-    segshape plot alignment-path ...   # side-by-side C++ vs Py path windows
-    segshape plot trajectory     ...   # 20-sample trajectory snapshot
+    segshape plot alignment-path ...   # per-read event→kmer DP path
     segshape plot dorado-mv      ...   # one read's signal + mv table overlay
     segshape plot segment        ...   # subevents.parquet overlaid on signal
 """
@@ -16,17 +15,12 @@ import argparse
 def register(parser: argparse.ArgumentParser) -> None:
     sub = parser.add_subparsers(dest="kind", required=True, metavar="<kind>")
 
-    from segshape.plot import alignment_path, dorado_mv, segment_qc, trajectory
+    from segshape.plot import alignment_path, dorado_mv, segment_qc
 
     sp_a = sub.add_parser("alignment-path",
-                          help="detailed start/middle/end window of one read")
+                          help="per-read event→kmer DP path with anchors")
     alignment_path.add_arguments(sp_a)
     sp_a.set_defaults(func=alignment_path.run)
-
-    sp_t = sub.add_parser("trajectory",
-                          help="20-sample chronological trajectory for a few reads")
-    trajectory.add_arguments(sp_t)
-    sp_t.set_defaults(func=trajectory.run)
 
     sp_d = sub.add_parser("dorado-mv",
                           help="signal + mv table overlay for one read")

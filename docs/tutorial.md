@@ -24,7 +24,7 @@ Two auxiliary commands work on the outputs of any step:
 - `segshape evaluate` — per-read LL filter, per-position summary, and
   structure / reactivity scoring against a ground truth.
 - `segshape plot` — diagnostic plots (segmentation QC, alignment path,
-  signal trajectory, Dorado move table).
+  Dorado move table). See [docs/plot.md](plot.md).
 
 Run `segshape --help` or `segshape <command> --help` at any time to see every
 flag for a sub-command.
@@ -286,7 +286,7 @@ Production defaults:
 | `--method` | `if-1D` | IsolationForest outlier-rate test |
 | `--contamination` | 0.005 | IF control-tail fraction (matches `--nu` / `--gmm-quantile`) |
 | `--smooth-window` | 0 | no smoothing (raw per-position z-score); set 5 for the nanoSHAPE convention |
-| `--normalize` | zscore | per-position normalization written to the `.dat` reactivity |
+| `--normalize` | zscore | reactivity normalization: `zscore` (subtracts the mean → ~half the values go negative, which RNAfold's Deigan treats as missing), `shape_28` / `boxplot` (Weeks-lab SHAPE-MaP scale-only normalizations → stay non-negative, keep every position as a constraint), or `none` |
 
 Other methods are available for comparison (`ks`, `wass`, `dmed`,
 `ocsvm-1D/2D`, `gmm-1D/2D`, `if-2D`, `xpore`) — pass e.g.

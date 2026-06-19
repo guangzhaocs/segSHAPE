@@ -548,17 +548,55 @@ def normalize_2_8(x: np.ndarray) -> np.ndarray:
     return out
 
 
+def normalize_boxplot(x: np.ndarray) -> np.ndarray:
+    """SHAPE-MaP / ShapeMapper2 box-plot normalization (Weeks lab; the
+    long-RNA variant, used for ≳ 100 nt).
+
+    Operates on the finite slots only:
+      1. Exclude high outliers: drop values above
+         ``max(1.5·IQR, p90)`` (``p95`` when n ≤ 100).
+      2. Reference = **mean of the top 10 %** of the survivors.
+      3. Divide every finite value by that reference; NaN slots stay NaN.
+
+    Like ``normalize_2_8`` (the '2–8 %' short-RNA variant) this only SCALES
+    (no mean subtraction), so non-negative input stays non-negative — every
+    position remains a usable RNAfold/Deigan constraint. The two are
+    rank-identical and differ only by a scalar (outlier rule: IQR-based vs
+    fixed top-2 %; reference: top-10 % vs top-8 %). Mirrors the normalization
+    in ``baselines/nanoSHAPE_reproduce`` so a direct comparison is exact."""
+    out = x.copy().astype(np.float64)
+    m = ~np.isnan(out)
+    finite = out[m]
+    n = len(finite)
+    if n < 50:
+        return out                                  # not enough data
+    q1, q3 = np.percentile(finite, 25), np.percentile(finite, 75)
+    iqr = q3 - q1
+    pct = np.percentile(finite, 90 if n > 100 else 95)
+    threshold = max(1.5 * iqr, pct)
+    survivors = finite[finite <= threshold]
+    k = int(len(survivors) * 0.1)
+    if k < 1:
+        return out
+    ref = float(np.sort(survivors)[-k:].mean())
+    if ref > 0:
+        out[m] = out[m] / ref
+    return out
+
+
 def normalize(x: np.ndarray, method: str = "zscore") -> np.ndarray:
-    """Dispatch ``method`` ∈ {'zscore', 'shape_28', 'none'} to the
-    corresponding normalizer. All methods preserve NaN slots."""
+    """Dispatch ``method`` ∈ {'zscore', 'shape_28', 'boxplot', 'none'} to
+    the corresponding normalizer. All methods preserve NaN slots."""
     if method == "zscore":
         return zscore(x)
     if method == "shape_28":
         return normalize_2_8(x)
+    if method == "boxplot":
+        return normalize_boxplot(x)
     if method == "none":
         return x.copy().astype(np.float64)
     raise ValueError(f"unknown --normalize method: {method!r}; "
-                     "expected one of zscore / shape_28 / none")
+                     "expected one of zscore / shape_28 / boxplot / none")
 
 
 def moving_avg(x: np.ndarray, window: int) -> np.ndarray:
@@ -868,13 +906,21 @@ def add_arguments(p: argparse.ArgumentParser) -> argparse.ArgumentParser:
                           "config-free so multiple smooth/norm sweeps share "
                           "one folder)." )
     g_o.add_argument("--normalize", default="zscore",
-                     choices=["zscore", "shape_28", "none"],
+                     choices=["zscore", "shape_28", "boxplot", "none"],
                      help="post-method normalization written to the "
-                          ".dat reactivity column. zscore (default) = "
-                          "(x - mean(finite)) / std(finite); "
+                          ".dat reactivity. zscore (default) = "
+                          "(x - mean(finite)) / std(finite) — NOTE this is "
+                          "the only option that subtracts the mean, so ~half "
+                          "the values go negative and RNAfold's Deigan method "
+                          "treats negatives as missing (no constraint). "
                           "shape_28 = SHAPE 2-8%% normalization (drop top 2%%, "
-                          "mean of next 8%% as the unit reference; standard "
-                          "Weeks-lab convention for .shape / .dat files); "
+                          "divide by mean of next 8%%; Weeks-lab short-RNA "
+                          "variant). boxplot = SHAPE-MaP/ShapeMapper2 box-plot "
+                          "normalization (drop IQR outliers, divide by mean of "
+                          "top 10%%; Weeks-lab long-RNA variant, ≳100 nt). "
+                          "shape_28 / boxplot only SCALE (no subtraction) so "
+                          "non-negative rates stay non-negative — every "
+                          "position remains a usable constraint. "
                           "none = pass-through (raw mod_rate copied).")
     g_o.add_argument("--variant-name", default="default",
                      help="leading tag of the per-run output folder name. "

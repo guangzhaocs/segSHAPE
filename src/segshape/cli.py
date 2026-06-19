@@ -76,7 +76,7 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate_cli.register(sub.add_parser(
         "evaluate", help="Evaluation, LL filtering, summary aggregation"))
     plot_cli.register(sub.add_parser(
-        "plot", help="Diagnostic plots / trajectory inspection"))
+        "plot", help="Diagnostic plots (segment QC, alignment path, dorado move table)"))
 
     return p
 
