@@ -42,7 +42,7 @@ class _PrintVersion(argparse.Action):
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="segshape",
-        description="segSHAPE: nanopore SHAPE segmentation, alignment, and modification calling.",
+        description="segSHAPE: RNA secondary structure prediction from Nanopore direct RNA sequencing.",
     )
     p.add_argument("-v", "--version", action=_PrintVersion, nargs=0,
                    help="show program's version number and exit")
