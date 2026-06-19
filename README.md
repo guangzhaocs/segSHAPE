@@ -68,12 +68,12 @@ outputs — in [docs/tutorial.md](https://github.com/guangzhaocs/segSHAPE/blob/m
 | module | what |
 |---|---|
 | `pod5index` | scan a folder of `*.pod5` and write `pod5.index` (read_id → filename) |
-| `dorado-extract` | per-read alignment + mv-derived signal interval CSV from a Dorado BAM |
+| `dorado-extract` | extract per-read alignment coordinates + mv-derived signal intervals from Dorado BAM |
 | `segment` | pod5 → `find_peaks` → `subevents.parquet` (per-read) |
-| `event-align` | anchored Viterbi DP: subevents → per-position k-mer model |
-| `mod-calling` | per-position modification / reactivity calling |
+| `event-align` | anchored Viterbi DP event→position alignment + per-read shift calibration |
+| `mod-calling` | per-position modification-rate calling |
 | `fold` | SHAPE-constrained secondary structure prediction (ViennaRNA RNAfold) |
-| `evaluate` | per-read LL filter, per-position MCC / reactivity summary, structure scoring |
+| `evaluate` | per-read LL filter, structure scoring (precision/recall/F1/MCC) |
 | `plot` | diagnostic plots (alignment path, dorado-mv, segment QC) |
 
 Run `segshape <cmd> --help` (and `segshape <cmd> <step> --help`) to see every
@@ -91,8 +91,8 @@ segshape module; step 2 wraps Dorado and step 7 wraps ViennaRNA `RNAfold`:
 | 2 | basecalling with move table | `dorado basecaller` |
 | 3 | dorado extract → per-read CSV | `segshape dorado-extract` |
 | 4 | segmentation: pod5 → peaks → subevents | `segshape segment` |
-| 5 | anchored event-alignment + per-read scaling | `segshape event-align` |
-| 6 | per-position modification / reactivity calling | `segshape mod-calling` |
+| 5 | anchored event-alignment + per-read shift calibration | `segshape event-align` |
+| 6 | per-position modification-rate calling | `segshape mod-calling` |
 | 7 | SHAPE-constrained structure prediction | `segshape fold` |
 
 Steps 3–5 outputs all live under `datasets/<DATASET>/<SAMPLE>/3_alignment/`.

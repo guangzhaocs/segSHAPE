@@ -13,10 +13,10 @@ The pipeline has **7 steps**. Five map onto a `segshape` sub-command; step 2
 |---|---|---|---|
 | 1 | fast5 → pod5, then build a read-id index | `pod5 convert` + `segshape pod5index` | `pod5` |
 | 2 | basecalling with move table | `dorado basecaller` | Dorado |
-| 3 | extract per-read alignment + signal interval | `segshape dorado-extract` | — |
+| 3 | extract per-read alignment coordinates + mv-derived signal intervals | `segshape dorado-extract` | — |
 | 4 | segmentation: pod5 → peaks → subevents | `segshape segment` | — |
-| 5 | anchored event-alignment + per-read scaling | `segshape event-align` | — |
-| 6 | per-position modification / reactivity calling | `segshape mod-calling` | — |
+| 5 | anchored event-alignment + per-read shift calibration | `segshape event-align` | — |
+| 6 | per-position modification-rate calling | `segshape mod-calling` | — |
 | 7 | SHAPE-constrained structure prediction | `segshape fold` | ViennaRNA |
 
 Two auxiliary commands work on the outputs of any step:
@@ -39,8 +39,16 @@ Requires Python ≥ 3.10 and the `RNAfold` binary (ViennaRNA) on `PATH` for
 step 7.
 
 ```bash
-pip install -e .            # from a source checkout
-conda install -c bioconda viennarna     # provides RNAfold for step 7
+# 1. Create an isolated environment (Python ≥ 3.10)
+conda create -n segshape python=3.10
+conda activate segshape
+
+# 2. Install segSHAPE from PyPI
+pip install segshape
+# or from a source checkout: pip install -e .
+
+# 3. Provide RNAfold for step 7 (tested with ViennaRNA 2.7.0)
+conda install -c bioconda viennarna
 ```
 
 Dorado (step 2) and the `pod5` CLI (step 1) are installed separately from

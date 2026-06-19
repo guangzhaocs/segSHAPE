@@ -2,7 +2,7 @@
 
 Per-read tight 4-corner bracketed semi-global Viterbi DP that maps the events
 emitted by ``segshape segment`` (one row per find_peaks event) to a per-position
-kmer model derived from the reference, with per-read scale/shift calibration.
+kmer model derived from the reference, with per-read shift calibration.
 
 Inputs (per sample):
   - ``3_alignment/subevents.parquet``     from ``segshape segment``

@@ -63,18 +63,18 @@ def build_parser() -> argparse.ArgumentParser:
         "pod5index", help="build a read_id index for a folder of pod5 files"))
     io_cli.register_dorado_extract(sub.add_parser(
         "dorado-extract",
-        help="extract per-read alignment + signal-mapping CSV from a dorado BAM"))
+        help="extract per-read alignment coordinates + mv-derived signal intervals from a Dorado BAM"))
     segment_cli.register(sub.add_parser(
         "segment", help="find_peaks segmentation: pod5 → subevents.parquet (per-read, mv_trans-clipped)"))
     align_cli.register(sub.add_parser(
-        "event-align", help="Anchored alignment of events to per-position kmer model"))
+        "event-align", help="anchored Viterbi DP event→position alignment + per-read shift calibration"))
     reactivity_cli.register(sub.add_parser(
-        "mod-calling", help="Modification / reactivity calling"))
+        "mod-calling", help="per-position modification-rate calling"))
     fold_cli.register(sub.add_parser(
         "fold",
         help="SHAPE-constrained secondary structure prediction (ViennaRNA)"))
     evaluate_cli.register(sub.add_parser(
-        "evaluate", help="Evaluation, LL filtering, summary aggregation"))
+        "evaluate", help="per-read LL filter, structure scoring (precision/recall/F1/MCC)"))
     plot_cli.register(sub.add_parser(
         "plot", help="Diagnostic plots (segment QC, alignment path, dorado move table)"))
 
