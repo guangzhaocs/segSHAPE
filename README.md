@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/guangzhaocs/segSHAPE/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/guangzhaocs/segSHAPE?include_prereleases)](https://github.com/guangzhaocs/segSHAPE/releases)
 [![PyPI](https://img.shields.io/pypi/v/segshape)](https://pypi.org/project/segshape/)
-[![Downloads](https://static.pepy.tech/badge/segshape/month)](https://pepy.tech/project/segshape)
+[![Downloads](https://static.pepy.tech/badge/segshape)](https://pepy.tech/project/segshape)
 
 End-to-end pipeline: raw nanopore direct-RNA signal → SHAPE reactivity → RNA
 secondary structure, supporting both **RNA002** and **RNA004** chemistries.
