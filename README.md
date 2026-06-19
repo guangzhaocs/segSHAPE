@@ -1,11 +1,11 @@
 # segSHAPE: RNA secondary structure prediction from nanopore direct RNA sequencing
 
 [![bioRxiv](https://img.shields.io/badge/bioRxiv-2026.06.15.732177-green)](https://www.biorxiv.org/content/10.64898/2026.06.15.732177)
-[![PyPI](https://img.shields.io/pypi/v/segshape)](https://pypi.org/project/segshape/)
-[![Downloads](https://img.shields.io/pypi/dm/segshape)](https://pypi.org/project/segshape/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/guangzhaocs/segSHAPE/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/guangzhaocs/segSHAPE?include_prereleases)](https://github.com/guangzhaocs/segSHAPE/releases)
+[![PyPI](https://img.shields.io/pypi/v/segshape)](https://pypi.org/project/segshape/)
+[![Downloads](https://img.shields.io/pypi/dm/segshape)](https://pypi.org/project/segshape/)
 
 End-to-end pipeline: raw nanopore direct-RNA signal → SHAPE reactivity → RNA
 secondary structure, supporting both **RNA002** and **RNA004** chemistries.
@@ -37,6 +37,10 @@ pip install segshape
 
 # 3. Provide RNAfold for the folding step (7); tested with ViennaRNA 2.7.0
 conda install -c bioconda viennarna
+
+# 4. Test the install
+segshape --version
+segshape --help
 ```
 
 To install from source instead (for development):
