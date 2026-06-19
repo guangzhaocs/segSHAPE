@@ -16,7 +16,7 @@ a reference with an anchored Viterbi DP, calls per-position modification rates
 by comparing a SHAPE-treated sample against an untreated control, and feeds the
 resulting reactivity profile to ViennaRNA `RNAfold`.
 
-> **Status**: v0.1.0. All 7 pipeline steps are implemented end-to-end
+> **Status**: v0.1.1. All 7 pipeline steps are implemented end-to-end
 > (`pod5index → dorado-extract → segment → event-align → mod-calling → fold`,
 > plus `evaluate` / `plot`). **Every command runs on built-in defaults that
 > are the parameter set used in the segSHAPE paper**, so a clean run
@@ -35,7 +35,7 @@ conda activate segshape
 # 2. Install segSHAPE from PyPI
 pip install segshape
 
-# 3. Provide RNAfold for the folding step (7); tested with ViennaRNA 2.7.x
+# 3. Provide RNAfold for the folding step (7); tested with ViennaRNA 2.7.0
 conda install -c bioconda viennarna
 ```
 
