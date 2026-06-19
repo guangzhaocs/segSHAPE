@@ -2,8 +2,9 @@
 
 [![bioRxiv](https://img.shields.io/badge/bioRxiv-2026.06.15.732177-green)](https://www.biorxiv.org/content/10.64898/2026.06.15.732177)
 [![PyPI](https://img.shields.io/pypi/v/segshape)](https://pypi.org/project/segshape/)
+[![Downloads](https://img.shields.io/pypi/dm/segshape)](https://pypi.org/project/segshape/)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/guangzhaocs/segSHAPE/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/guangzhaocs/segSHAPE?include_prereleases)](https://github.com/guangzhaocs/segSHAPE/releases)
 
 End-to-end pipeline: raw nanopore direct-RNA signal → SHAPE reactivity → RNA
@@ -53,9 +54,9 @@ package — nothing extra to download. Basecalling (step 2) uses Dorado and the
 ## Tutorial
 
 End-to-end walkthrough — directory layout, per-step commands, and expected
-outputs — in [docs/tutorial.md](docs/tutorial.md). Diagnostic plotting
+outputs — in [docs/tutorial.md](https://github.com/guangzhaocs/segSHAPE/blob/main/docs/tutorial.md). Diagnostic plotting
 (`segshape plot`), with a tiny ready-to-run example fixture, is in
-[docs/plot.md](docs/plot.md).
+[docs/plot.md](https://github.com/guangzhaocs/segSHAPE/blob/main/docs/plot.md).
 
 ## Public modules (CLI surface)
 
@@ -121,7 +122,7 @@ segshape fold --mod-rate-csv \
     --ref-fa $REF --contig $CONTIG
 ```
 
-See [docs/tutorial.md](docs/tutorial.md) for each step's inputs, outputs, and
+See [docs/tutorial.md](https://github.com/guangzhaocs/segSHAPE/blob/main/docs/tutorial.md) for each step's inputs, outputs, and
 options.
 
 ## Library use
@@ -168,4 +169,4 @@ segmentation, calibration, and reactivity logic.
 
 ## License
 
-Apache-2.0 — see [LICENSE](LICENSE).
+Apache-2.0 — see [LICENSE](https://github.com/guangzhaocs/segSHAPE/blob/main/LICENSE).
