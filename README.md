@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/guangzhaocs/segSHAPE/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/guangzhaocs/segSHAPE?include_prereleases)](https://github.com/guangzhaocs/segSHAPE/releases)
 [![PyPI](https://img.shields.io/pypi/v/segshape)](https://pypi.org/project/segshape/)
-[![Downloads](https://static.pepy.tech/badge/segshape)](https://pepy.tech/project/segshape)
+[![Downloads](https://static.pepy.tech/personalized-badge/segshape?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/segshape)
 
 End-to-end pipeline: raw nanopore direct-RNA signal → SHAPE reactivity → RNA
 secondary structure, supporting both **RNA002** and **RNA004** chemistries.
@@ -96,6 +96,13 @@ segshape module; step 2 wraps Dorado and step 7 wraps ViennaRNA `RNAfold`:
 | 7 | SHAPE-constrained structure prediction | `segshape fold` |
 
 Steps 3–5 outputs all live under `datasets/<DATASET>/<SAMPLE>/3_alignment/`.
+
+## Datasets & reproduction
+
+The benchmark datasets and a runnable reproduction report (regenerating the paper's
+precision / recall / F1 / MCC) are in
+[`datasets/`](https://github.com/guangzhaocs/segSHAPE/tree/main/datasets) — see
+[`datasets/reproduction.ipynb`](https://github.com/guangzhaocs/segSHAPE/blob/main/datasets/reproduction.ipynb).
 
 ## Quick start
 
