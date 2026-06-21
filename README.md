@@ -35,7 +35,7 @@ conda activate segshape
 # 2. Install segSHAPE from PyPI
 pip install segshape
 
-# 3. Provide RNAfold for the folding step (7); tested with ViennaRNA 2.7.0
+# 3. Provide RNAfold for the folding step (7); tested with ViennaRNA 2.7.0 and 2.7.2
 conda install -c bioconda viennarna
 
 # 4. Test the install
