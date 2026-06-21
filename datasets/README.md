@@ -26,14 +26,17 @@ they apply.
 | `reference.fa` | reference sequence(s) | FASTA, **5'→3'** (single contig, or the full pool for `smPC_*`) |
 | `structure_gt.txt` | ground-truth secondary structure | `>gt` + dot-bracket; **5'→3', 1-based** (position *i* = reference base *i*), length = ref_len |
 | `pos_kmer_table.csv` | per-position k-mer model (fit on the control sample) | `pos` (**3'→5', 0-based**), `reference_pos` (**5'→3', 1-based**), `kmer` (string **5'→3' canonical**), `mean`, `stdv`, `n_obs` |
-| `mod_rate_if_contam<c>.csv` | per-position **raw** modification rate (if-1D, contamination `<c>`) | `pos_idx` (**3'→5', 0-based**), `reference_pos` (**5'→3', 1-based**), `mod_rate` (`nan` = no coverage) |
-| `reactivity_norm_if_contam<c>.dat` | normalized reactivity — the RNAfold SHAPE input (if-1D) | two cols: `reference_pos` (**5'→3', 1-based**) ⟶ value (z-score; `-999` = dead-zone / no data) |
-| `rnafold_if.out` | `RNAfold -p -d2 --noLP --noPS --shapeMethod=D` output, **if-1D** mod-calling | header / sequence / MFE / ensemble / centroid structures; all **5'→3', 1-based** |
-| `rnafold_gmm.out` | same, **gmm-1D** mod-calling (the alternative deterministic method; structure output only) | as above |
+| `mod_rate_if_contam<c>.csv` | per-position **raw** modification rate, **if-1D** (contamination `<c>`) | `pos_idx` (**3'→5', 0-based**), `reference_pos` (**5'→3', 1-based**), `mod_rate` (`nan` = no coverage) |
+| `mod_rate_gmm_q<q>.csv` | same, **gmm-1D** (quantile `<q>`) | same columns |
+| `reactivity_norm_if_contam<c>.dat` | normalized reactivity (RNAfold SHAPE input), **if-1D** | two cols: `reference_pos` (**5'→3', 1-based**) ⟶ value (z-score; `-999` = dead-zone / no data) |
+| `reactivity_norm_gmm_q<q>.dat` | same, **gmm-1D** | same format |
+| `rnafold_if.out` | `RNAfold -p -d2 --noLP --noPS --shapeMethod=D` output, **if-1D** | header / sequence / MFE / ensemble / centroid structures; all **5'→3', 1-based** |
+| `rnafold_gmm.out` | same, **gmm-1D** | as above |
 
-`if-1D` is the manuscript's mod-calling method (full chain: `mod_rate` + `reactivity` +
-`rnafold_if.out`). `gmm-1D` ships only the final structure (`rnafold_gmm.out`) as an ablation
-comparison; GMM is not reported in the manuscript for the two `smPC_*pool_wt` datasets.
+`if-1D` is the manuscript's mod-calling method (contamination `c`); `gmm-1D` is an
+alternative, fully-deterministic method (quantile `q` = 0.005 RNA002 / 0.02 RNA004). Both
+ship the full chain (`mod_rate` + `reactivity` + `rnafold_*.out`). GMM is not reported in
+the manuscript for the two `smPC_*pool_wt` datasets.
 
 ## Coordinate conventions & conversion
 
